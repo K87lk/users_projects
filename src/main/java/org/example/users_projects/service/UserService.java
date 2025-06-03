@@ -2,6 +2,7 @@ package org.example.users_projects.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.users_projects.dto.UserRequestDTO;
 import org.example.users_projects.dto.UserResponseDTO;
 import org.example.users_projects.mapper.UserMapper;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -35,14 +37,18 @@ public class UserService {
     @Transactional
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         if (userRepository.existsByUsername(userRequestDTO.getUsername())) {
+            log.error("Username %s is already taken : {}", userRequestDTO.getUsername());
             throw new IllegalArgumentException("Username is already taken");
         }
         if (userRepository.existsByEmail(userRequestDTO.getEmail())) {
+            log.error("Email %s is already in use : {}", userRequestDTO.getEmail());
             throw new IllegalArgumentException("Email is already in use");
         }
 
         User user = userMapper.toEntity(userRequestDTO);
         User savedUser = userRepository.save(user);
+
+        log.info("User created: {}", savedUser);
         return userMapper.toDTO(savedUser);
     }
 
@@ -64,6 +70,8 @@ public class UserService {
         userMapper.updateEntity(existingUser, userRequestDTO);
 
         User updatedUser = userRepository.save(existingUser);
+
+        log.info("User updated: {}", updatedUser);
         return userMapper.toDTO(updatedUser);
     }
 
@@ -72,6 +80,7 @@ public class UserService {
         if (!userRepository.existsById(id)) {
             throw new EntityNotFoundException("User not found with id: " + id);
         }
+        log.info("User deleted with id: {}", id);
         userRepository.deleteById(id);
     }
 }
