@@ -1,10 +1,12 @@
 package org.example.users_projects.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
 
 @Getter
+@AllArgsConstructor
 public enum SubscriptionPeriod {
     ONE_MONTH(30, "1 месяц"),
     THREE_MONTHS(90, "3 месяца"),
@@ -13,11 +15,6 @@ public enum SubscriptionPeriod {
 
     private final int days;
     private final String displayName;
-
-    SubscriptionPeriod(int days, String displayName) {
-        this.days = days;
-        this.displayName = displayName;
-    }
 
     public static SubscriptionPeriod fromDisplayName(String displayName) {
         return Arrays.stream(values())
