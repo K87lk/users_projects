@@ -1,0 +1,12 @@
+###
+POST http://localhost:8080/users/a1007ccc-1a0f-4974-809f-2144134ae609/subscriptions
+Content-Type: application/json
+
+{
+  "serviceName": "NETFLIX",
+  "subscriptionPeriod": "THREE_MONTHS"
+}
+###
+GET http://localhost:8080/users/29c9578f-e009-4128-8a80-d1af27911f1e/subscriptions
+###
+GET http://localhost:8080/subscriptions/top

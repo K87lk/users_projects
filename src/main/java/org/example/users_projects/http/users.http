@@ -1,0 +1,24 @@
+###
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "username": "vanya_smailik",
+  "email": "vanek333@protonmail.com",
+  "password": "21674b6c-2bc3-4538-abd2-7c2cf6fbbb78"
+}
+###
+GET http://localhost:8080/users
+###
+GET http://localhost:8080/users/1027fbf3-03ba-4822-a860-d25e786459d6
+###
+PUT http://localhost:8080/users/1027fbf3-03ba-4822-a860-d25e786459d6
+Content-Type: application/json
+
+{
+  "username": "new_name_2",
+  "email": "newmail343lili@gmail.com",
+  "password": "another shitty password"
+}
+###
+DELETE http://localhost:8080/users/1027fbf3-03ba-4822-a860-d25e786459d6
